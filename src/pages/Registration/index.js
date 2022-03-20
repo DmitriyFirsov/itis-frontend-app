@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 
 import useAuthUser from 'globals/AuthUser';
+import signUp from 'api/mutations/signUp';
 
 import emailValidator from 'validators/stringValidators/emailValidator';
 import useSharedValidation from 'validators/useSharedValidation';
@@ -18,8 +19,6 @@ import useHandleChangeField from 'components/form/utils/useHandleChangeField';
 import TextField from 'components/form/formFields/TextField';
 import PasswordField from 'components/form/formFields/PasswordField';
 import Button from 'components/form/inputs/Button';
-
-import signUp from 'api/mutations/signUp';
 
 const INITIAL_FORM_STATE = {
 	email: '',
