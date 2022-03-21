@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import useAuthUser from 'globals/AuthUser';
-// import createProject from 'api/mutations/createProject';
 import useCreateProject from 'hooks/mutations/useCreateProject';
 import useCurrentUser from 'hooks/query/useCurrentUser';
 
@@ -43,8 +41,6 @@ export default function Index() {
 
 	return (
 		<DefaultLayout title="Home page">
-			{/* <Link to={'/login'}> Go to login page </Link>
-			<Link to={'/registration'}> Go to registration page </Link> */}
 			<Button onClick={handleLogoutClick}>Logout</Button>
 			<Button onClick={handleClick}>Create project</Button>
 			<EntityListWrapper>
