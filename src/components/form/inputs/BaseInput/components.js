@@ -8,7 +8,7 @@ export const StyledInput = styled.input`
 	font-size: 1em;
 `;
 
-export const Container = styled.div(({ $isError }) => {
+export const Container = styled.div(({ $isError, $disabled }) => {
 	return css`
 		display: inline-flex;
 		flex-direction: row;
@@ -21,6 +21,11 @@ export const Container = styled.div(({ $isError }) => {
 		padding: 0.2em;
 		border: 3px solid ${$isError ? 'red' : '#bb7db2'};
 		border-radius: 6px;
+
+		${$disabled &&
+		css`
+			border-color: grey;
+		`}
 	`;
 });
 
