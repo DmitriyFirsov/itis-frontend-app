@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const CREATE_PROJECT_MUTATION = gql`
+export default gql`
   mutation createProject($name: String!, $description: String) {
     createProject(name: $name, description: $description) {
       description
@@ -15,9 +15,3 @@ const CREATE_PROJECT_MUTATION = gql`
     }
   }
 `;
-
-export default async function createProject(client, params) {
-	const { data } = await client.mutate({ mutation: CREATE_PROJECT_MUTATION, variables: params });
-
-	return data;
-}

@@ -4,13 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { useApolloClient } from '@apollo/client';
 
 import useAuthUser from 'globals/AuthUser';
-import createProject from 'api/mutations/createProject';
+// import createProject from 'api/mutations/createProject';
+import useCreateProject from 'hooks/mutations/useCreateProject';
+import useCurrentUser from 'hooks/query/useCurrentUser';
 
 import DefaultLayout from 'components/Layouts/DefaultLayout/DefaultLayout';
 import Button from 'components/form/inputs/Button';
 
 const INITIAL_FORM_STATE = {
-	name: 'New task 2',
+	name: 'New task 4',
 	description: 'desc'
 };
 
@@ -23,11 +25,14 @@ export default function Index() {
 	// };
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 
-	const client = useApolloClient();
+	// const client = useApolloClient();
+	const { create } = useCreateProject();
+	const { currentUser } = useCurrentUser();
+
 	const handleClick = async (event) => {
 		event.preventDefault();
 
-		await createProject(client, formState);
+		await create(formState.name, formState.description);
 	};
 
 	useEffect(() => {
@@ -43,7 +48,7 @@ export default function Index() {
 			<Button onClick={handleClick}> Logout </Button> */}
 			<Button onClick={handleClick}>Create project</Button>
 			<ul>
-				{AuthUserState?.user?.projects?.map((project) => (
+				{currentUser?.projects?.map((project) => (
 					<li key={project.id}>{project.name}</li>
 				))}
 			</ul>
