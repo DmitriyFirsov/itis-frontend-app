@@ -5,7 +5,7 @@ const useCurrentUser = () => {
 	const { data } = useQuery(getCurrentUser);
 
 	return {
-		currentUser: data?.me || {},
+		currentUser: data?.me || {}
 	};
 };
 

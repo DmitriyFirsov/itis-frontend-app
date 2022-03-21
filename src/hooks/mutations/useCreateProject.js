@@ -13,7 +13,7 @@ const useCreateProject = () => {
 
 	return {
 		create,
-		data,
+		data
 	};
 };
 
