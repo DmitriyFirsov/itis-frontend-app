@@ -6,8 +6,8 @@ import useCreateProject from 'hooks/mutations/useCreateProject';
 import useCurrentUser from 'hooks/query/useCurrentUser';
 
 import DefaultLayout from 'components/Layouts/DefaultLayout/DefaultLayout';
-import EntityListWrapper from 'components/EntityListWrapper/EntityListWrapper';
-import EntityCard from 'components/EntityCard';
+import EntityListWrapper from 'components/entity/EntityListWrapper/EntityListWrapper';
+import EntityCard from 'components/entity/EntityCard';
 import Button from 'components/form/inputs/Button';
 
 const INITIAL_FORM_STATE = {
