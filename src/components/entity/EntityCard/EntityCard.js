@@ -7,7 +7,7 @@ import { Wrapper, Header, Form, ButtonWrapper, StyledImage } from './components'
 import EditImg from './images/pen.png';
 import RemoveImg from './images/trash-bin.png';
 
-export default function EntityCard({ entityName, name, description }) {
+export default function EntityCard({ entityName, name, projectId, description, onRemoveClick }) {
 	return (
 		<Wrapper>
 			<Header>
@@ -16,7 +16,7 @@ export default function EntityCard({ entityName, name, description }) {
 					<Button>
 						<StyledImage src={EditImg} alt="presentation" />
 					</Button>
-					<Button>
+					<Button onClick={() => onRemoveClick(projectId)}>
 						<StyledImage src={RemoveImg} alt="presentation" />
 					</Button>
 				</ButtonWrapper>
