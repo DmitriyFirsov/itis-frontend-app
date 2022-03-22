@@ -5,13 +5,6 @@ export default gql`
 		createProject(name: $name, description: $description) {
 			description
 			name
-			users {
-				avatarUrl
-				email
-				firstName
-				id
-				lastName
-			}
 		}
 	}
 `;

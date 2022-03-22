@@ -6,6 +6,7 @@ const Wrapper = styled.div(
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
+		margin-left: 3rem;
 
 		> :nth-child(n) {
 			margin-bottom: 1rem;
