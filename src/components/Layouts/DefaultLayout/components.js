@@ -23,3 +23,7 @@ export const Content = styled.div`
 	background-color: #bfd2de;
 	height: 100vh;
 `;
+
+export const MainBlock = styled.main`
+	background-color: #bfd2de;
+`;

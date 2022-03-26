@@ -5,7 +5,7 @@ import EnvSpecificRouter from 'components/EnvSpecificRouter';
 import { AuthUser } from 'globals/AuthUser';
 
 import LoginPage from 'pages/Login';
-import MainPage from 'pages/Index';
+import HomePage from 'pages/index';
 import RegistrationPage from 'pages/Registration';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
 		<AuthUser>
 			<EnvSpecificRouter>
 				<Routes>
-					<Route path={'/'} element={<MainPage />} />
+					<Route path={'/'} element={<HomePage />} />
 					<Route path={'/login'} element={<LoginPage />} />
 					<Route path={'/registration'} element={<RegistrationPage />} />
 				</Routes>
