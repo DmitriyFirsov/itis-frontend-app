@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import project from '../fragments/project';
 
-const USER_ME_QUERY = gql`
+export const USER_ME_QUERY = gql`
 	query currentUser {
 		me {
 			avatarUrl

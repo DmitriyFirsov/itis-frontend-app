@@ -5,12 +5,12 @@ import useAuthUser from 'globals/AuthUser';
 import useCreateProject from 'hooks/mutations/useCreateProject';
 import useRemoveProject from 'hooks/mutations/useRemoveProject';
 import useUpdateProject from 'hooks/mutations/useUpdateProject';
-import useCurrentUser from 'hooks/query/useCurrentUser';
 
 import DefaultLayout from 'components/Layouts/DefaultLayout/DefaultLayout';
 import EntityListWrapper from 'components/entity/EntityListWrapper/EntityListWrapper';
 import EntityCard from 'components/entity/EntityCard';
 import Button from 'components/form/inputs/Button';
+import { useApolloClient } from '@apollo/client';
 
 const INITIAL_FORM_STATE = {
 	name: 'New task 5',
@@ -18,10 +18,13 @@ const INITIAL_FORM_STATE = {
 };
 
 export default function Index() {
-	const { dispatch, state: AuthUserState } = useAuthUser();
+	const { user, isLoading } = useAuthUser();
+
+	const client = useApolloClient();
 	const navigate = useNavigate();
-	const handleLogoutClick = () => {
-		dispatch({ type: 'logout' });
+	const handleLogoutClick = async () => {
+		localStorage.clear();
+		await client.clearStore();
 		navigate('/login');
 	};
 	// const [formState, setFormState] = useState(INITIAL_FORM_STATE);
@@ -29,7 +32,6 @@ export default function Index() {
 	const { create } = useCreateProject();
 	const { remove } = useRemoveProject();
 	const { update } = useUpdateProject();
-	const { currentUser } = useCurrentUser();
 
 	const handleCreateClick = async (event) => {
 		event.preventDefault();
@@ -38,17 +40,17 @@ export default function Index() {
 	};
 
 	useEffect(() => {
-		if (!AuthUserState.user) {
+		if (isLoading === false && !user) {
 			navigate('/login');
 		}
-	}, [AuthUserState.user]);
+	}, [user, isLoading]);
 
 	return (
 		<DefaultLayout title="Home page">
 			<Button onClick={handleLogoutClick}>Logout</Button>
 			<Button onClick={handleCreateClick}>Create project</Button>
 			<EntityListWrapper>
-				{currentUser?.projects?.map((project) => (
+				{user?.projects?.map((project) => (
 					<EntityCard
 						key={project.id}
 						id={project.id}
