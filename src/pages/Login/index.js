@@ -32,23 +32,21 @@ export default function Index() {
 
 	const handleEvents = useHandleChangeField(setFormState);
 
-	const { dispatch, state: AuthUser } = useAuthUser();
+	const { user, isLoading } = useAuthUser();
 	const client = useApolloClient();
 	const handleSignIn = async (event) => {
 		event.preventDefault();
 		if (!isHasError && isRequiredFieldFilled) {
-			dispatch({ type: 'loading' });
-			const result = await signIn(client, formState);
-			dispatch({ type: 'loaded', payload: result });
+			await signIn(client, formState);
 		}
 	};
 
 	const navigate = useNavigate();
 	useEffect(() => {
-		if (AuthUser.user) {
+		if (isLoading === false && user) {
 			navigate('/', { replace: true });
 		}
-	}, [AuthUser.user]);
+	}, [isLoading, user]);
 
 	return (
 		<OneFormLayout>
@@ -61,7 +59,7 @@ export default function Index() {
 				onChange={handleEvents}
 				onBlur={handleEvents}
 			/>
-			<Button type="submit" disabled={isHasError || !isRequiredFieldFilled || AuthUser.isLoading} onClick={handleSignIn}>
+			<Button type="submit" disabled={isHasError || !isRequiredFieldFilled || isLoading} onClick={handleSignIn}>
 				Log in
 			</Button>
 		</OneFormLayout>

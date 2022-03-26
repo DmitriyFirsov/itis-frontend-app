@@ -5,7 +5,7 @@ import EnvSpecificRouter from 'components/EnvSpecificRouter';
 import { AuthUser } from 'globals/AuthUser';
 
 import LoginPage from 'pages/Login';
-import HomePage from 'pages/index';
+import HomePage from 'pages/Index';
 import RegistrationPage from 'pages/Registration';
 
 function App() {
