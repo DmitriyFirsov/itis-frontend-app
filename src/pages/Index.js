@@ -49,8 +49,8 @@ export default function Index() {
 				{currentUser?.projects?.map((project) => (
 					<EntityCard
 						key={project.id}
-						projectId={project.id}
-						entityName="Project"
+						id={project.id}
+						title="Project"
 						name={project.name}
 						description={project.description}
 						onRemoveClick={remove}
