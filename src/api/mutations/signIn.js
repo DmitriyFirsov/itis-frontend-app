@@ -15,7 +15,6 @@ export default function signIn(client, params) {
 	return client.mutate({
 		mutation: SIGN_IN_MUTATION,
 		variables: params,
-		update: () => {},
 		refetchQueries: ({
 			data: {
 				signin: { accessToken, refreshToken }
