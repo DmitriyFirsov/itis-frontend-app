@@ -94,7 +94,7 @@ export default function Registration() {
 				value={formState.password}
 				error={errorsState.password}
 			/>
-			<Button type="submit" disabled={isHasError || !isRequiredFieldFilled || AuthUser.isLoading} onClick={handleRegister}>
+			<Button type="submit" disabled={isHasError || !isRequiredFieldFilled || isLoading} onClick={handleRegister}>
 				Register
 			</Button>
 		</OneFormLayout>

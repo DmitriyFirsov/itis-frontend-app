@@ -1,12 +1,21 @@
 import React, { createContext, useContext, useEffect, useMemo } from 'react';
-import { useQuery } from '@apollo/client';
+import { useApolloClient, useQuery } from '@apollo/client';
 
 import { USER_ME_QUERY } from 'api/query/currentUser';
 
 const UserContext = createContext();
 
 export function AuthUser({ children }) {
-	const { data, loading } = useQuery(USER_ME_QUERY);
+	const { data, loading, refetch } = useQuery(USER_ME_QUERY);
+	const client = useApolloClient();
+	useEffect(() => {
+		const cb = client.onClearStore(async () => {
+			await refetch();
+		});
+		return () => {
+			cb();
+		};
+	}, []);
 	const value = useMemo(
 		() => ({
 			user: data ? data.me : null,

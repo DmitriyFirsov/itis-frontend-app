@@ -11,15 +11,13 @@ const SIGN_UP_MUTATION = gql`
 	}
 `;
 
-export default async function signUp(client, params) {
-	const {
-		data: { signup }
-	} = await client.mutate({
+export default function signUp(client, params) {
+	return client.mutate({
 		mutation: SIGN_UP_MUTATION,
 		variables: params,
 		refetchQueries: ({
 			data: {
-				signin: { accessToken, refreshToken }
+				signup: { accessToken, refreshToken }
 			}
 		}) => {
 			localStorage.setItem(ACCESS_TOKEN, accessToken);
@@ -27,5 +25,4 @@ export default async function signUp(client, params) {
 			return [USER_ME_QUERY];
 		}
 	});
-	return signup;
 }
