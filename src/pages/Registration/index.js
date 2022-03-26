@@ -44,21 +44,19 @@ export default function Registration() {
 
 	const handleEvents = useHandleChangeField(setFormState);
 
-	const { state: AuthUser, dispatch } = useAuthUser();
+	const { isLoading, user } = useAuthUser();
 	const navigate = useNavigate();
 	useEffect(() => {
-		if (AuthUser.user) {
+		if (isLoading === false && user) {
 			navigate('/', { replace: true });
 		}
-	}, [AuthUser.user]);
+	}, [isLoading, user]);
 
 	const client = useApolloClient();
 	const handleRegister = async (event) => {
 		event.preventDefault();
-		if (!isHasError && isRequiredFieldFilled && !AuthUser.isLoading) {
-			dispatch({ type: 'loading' });
-			const payload = await signUp(client, formState);
-			dispatch({ type: 'loaded', payload });
+		if (!isHasError && isRequiredFieldFilled) {
+			await signUp(client, formState);
 		}
 	};
 

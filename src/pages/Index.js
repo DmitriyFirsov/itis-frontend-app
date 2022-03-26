@@ -17,10 +17,10 @@ const INITIAL_FORM_STATE = {
 };
 
 export default function Index() {
-	const { dispatch, state: AuthUserState } = useAuthUser();
+	const { user, isLoading } = useAuthUser();
 	const navigate = useNavigate();
 	const handleLogoutClick = () => {
-		dispatch({ type: 'logout' });
+	//	dispatch({ type: 'logout' });
 		navigate('/login');
 	};
 	// const [formState, setFormState] = useState(INITIAL_FORM_STATE);
@@ -36,10 +36,10 @@ export default function Index() {
 	};
 
 	useEffect(() => {
-		if (!AuthUserState.user) {
+		if (isLoading === false && !user) {
 			navigate('/login');
 		}
-	}, [AuthUserState.user]);
+	}, [user, isLoading]);
 
 	return (
 		<DefaultLayout title="Home page">
