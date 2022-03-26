@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useAuthUser from 'globals/AuthUser';
 import useCreateProject from 'hooks/mutations/useCreateProject';
 import useRemoveProject from 'hooks/mutations/useRemoveProject';
+import useUpdateProject from 'hooks/mutations/useUpdateProject';
 import useCurrentUser from 'hooks/query/useCurrentUser';
 
 import DefaultLayout from 'components/Layouts/DefaultLayout/DefaultLayout';
@@ -27,9 +28,10 @@ export default function Index() {
 
 	const { create } = useCreateProject();
 	const { remove } = useRemoveProject();
+	const { update } = useUpdateProject();
 	const { currentUser } = useCurrentUser();
 
-	const handleClick = async (event) => {
+	const handleCreateClick = async (event) => {
 		event.preventDefault();
 
 		await create(INITIAL_FORM_STATE.name, INITIAL_FORM_STATE.description);
@@ -44,7 +46,7 @@ export default function Index() {
 	return (
 		<DefaultLayout title="Home page">
 			<Button onClick={handleLogoutClick}>Logout</Button>
-			<Button onClick={handleClick}>Create project</Button>
+			<Button onClick={handleCreateClick}>Create project</Button>
 			<EntityListWrapper>
 				{currentUser?.projects?.map((project) => (
 					<EntityCard
@@ -54,6 +56,7 @@ export default function Index() {
 						name={project.name}
 						description={project.description}
 						onRemoveClick={remove}
+						onUpdateClick={update}
 					/>
 				))}
 			</EntityListWrapper>
