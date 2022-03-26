@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { /* useState, */ useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useAuthUser from 'globals/AuthUser';
@@ -23,7 +23,7 @@ export default function Index() {
 		dispatch({ type: 'logout' });
 		navigate('/login');
 	};
-	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
+	// const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 
 	const { create } = useCreateProject();
 	const { remove } = useRemoveProject();
@@ -32,7 +32,7 @@ export default function Index() {
 	const handleClick = async (event) => {
 		event.preventDefault();
 
-		await create(formState.name, formState.description);
+		await create(INITIAL_FORM_STATE.name, INITIAL_FORM_STATE.description);
 	};
 
 	useEffect(() => {
