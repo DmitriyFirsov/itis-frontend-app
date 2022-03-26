@@ -9,13 +9,8 @@ import useUpdateProject from 'hooks/mutations/useUpdateProject';
 import DefaultLayout from 'components/Layouts/DefaultLayout/DefaultLayout';
 import EntityListWrapper from 'components/entity/EntityListWrapper/EntityListWrapper';
 import EntityCard from 'components/entity/EntityCard';
-import Button from 'components/form/inputs/Button';
+import CreateEntityBlock from 'components/entity/CreateEntityBlock';
 import { useApolloClient } from '@apollo/client';
-
-const INITIAL_FORM_STATE = {
-	name: 'New task 5',
-	description: 'desc'
-};
 
 export default function Index() {
 	const { user, isLoading } = useAuthUser();
@@ -27,17 +22,10 @@ export default function Index() {
 		await client.clearStore();
 		navigate('/login');
 	};
-	// const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 
 	const { create } = useCreateProject();
 	const { remove } = useRemoveProject();
 	const { update } = useUpdateProject();
-
-	const handleCreateClick = async (event) => {
-		event.preventDefault();
-
-		await create(INITIAL_FORM_STATE.name, INITIAL_FORM_STATE.description);
-	};
 
 	useEffect(() => {
 		if (isLoading === false && !user) {
@@ -47,8 +35,7 @@ export default function Index() {
 
 	return (
 		<DefaultLayout title="Home page">
-			<Button onClick={handleLogoutClick}>Logout</Button>
-			<Button onClick={handleCreateClick}>Create project</Button>
+			<CreateEntityBlock entity="project" handleLogoutClick={handleLogoutClick} createRequest={create} />
 			<EntityListWrapper>
 				{user?.projects?.map((project) => (
 					<EntityCard
