@@ -60,7 +60,7 @@ export default function EntityCard({ title, name, id, description, onRemoveClick
 			<Form>
 				<TextField
 					id={`name-for-${id}-${title.toLowerCase()}`}
-					label="Name"
+					label={isEditMode ? 'Name*' : 'Name'}
 					value={formState.name}
 					disabled={!isEditMode}
 					onChange={(event) => handleEvent(event, 'name')}
