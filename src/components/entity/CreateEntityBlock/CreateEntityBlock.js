@@ -23,7 +23,7 @@ export default function CreateEntityBlock({ entity, handleLogoutClick, createReq
 			<CreateBlock>
 				<Title>{`Create ${entity} form:`}</Title>
 				<Form>
-					<TextField id="name" label="Name" value={formState.name} onChange={handleEvents} onBlur={handleEvents}></TextField>
+					<TextField id="name" label="Name" value={formState.name} onChange={handleEvents} onBlur={handleEvents} required></TextField>
 					<TextField
 						id="description"
 						label="Description"
@@ -31,7 +31,7 @@ export default function CreateEntityBlock({ entity, handleLogoutClick, createReq
 						onChange={handleEvents}
 						onBlur={handleEvents}
 					></TextField>
-					<StyledButton type="submit" onClick={(event) => handleCreateClick(event)}>
+					<StyledButton type="submit" onClick={(event) => handleCreateClick(event)} disabled={formState.name.trim() === ''}>
 						Create
 					</StyledButton>
 				</Form>
