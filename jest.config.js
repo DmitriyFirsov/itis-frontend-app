@@ -3,5 +3,8 @@ module.exports = {
 	collectCoverage: true,
 	coverageDirectory: 'coverage',
 	coverageProvider: 'v8',
-	testEnvironment: 'jsdom'
+	testEnvironment: 'jsdom',
+	coverageReporters: ['text'],
+	testMatch: ['<rootDir>/src/**/*.(test).{js,jsx}'],
+	collectCoverageFrom: ['<rootDir>/src/**/*.{js,jsx}']
 };
