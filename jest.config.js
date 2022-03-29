@@ -6,5 +6,6 @@ module.exports = {
 	testEnvironment: 'jsdom',
 	coverageReporters: ['text'],
 	testMatch: ['<rootDir>/src/**/*.(test).{js,jsx}'],
-	collectCoverageFrom: ['<rootDir>/src/**/*.{js,jsx}']
+	collectCoverageFrom: ['<rootDir>/src/**/*.{js,jsx}'],
+	setupFilesAfterEnv: ['<rootDir>/setupTests.js']
 };

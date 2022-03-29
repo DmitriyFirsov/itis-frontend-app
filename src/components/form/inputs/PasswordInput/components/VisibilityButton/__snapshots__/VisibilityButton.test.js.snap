@@ -1,9 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`VisibilityButton test component with isHidden "false" should correctly render 1`] = `
+.c0 {
+  all: unset;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 1em;
+  width: 1em;
+}
+
 <div>
   <button
-    class="sc-bdvvtL dnHfMp"
+    class="c0"
     type="button"
   >
     <svg
@@ -19,9 +27,17 @@ exports[`VisibilityButton test component with isHidden "false" should correctly 
 `;
 
 exports[`VisibilityButton test component with isHidden "true" should correctly render 1`] = `
+.c0 {
+  all: unset;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 1em;
+  width: 1em;
+}
+
 <div>
   <button
-    class="sc-bdvvtL dnHfMp"
+    class="c0"
     type="button"
   >
     <svg
