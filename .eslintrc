@@ -9,17 +9,23 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "jest": {
+      "version": 27
     }
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style"
   ],
   "env": {
     "node": true,
     "commonjs": true,
     "browser": true,
-    "es6": true
+    "es6": true,
+    "jest": true
   },
   "rules": {
     "react/prop-types": "off",
