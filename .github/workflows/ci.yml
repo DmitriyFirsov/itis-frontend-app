@@ -23,3 +23,5 @@ jobs:
       run: yarn --frozen-lockfile
     - name: Linting
       run: yarn eslint . --ext .js
+    - name: Tests
+      run: jest
