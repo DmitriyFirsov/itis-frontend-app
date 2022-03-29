@@ -24,4 +24,4 @@ jobs:
     - name: Linting
       run: yarn eslint . --ext .js
     - name: Tests
-      run: jest
+      run: yarn jest
