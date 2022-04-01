@@ -1,13 +1,15 @@
 {
   "files": {
-    "main.js": "/itis-frontend-app/static/js/main.c2379e66.js",
+    "main.js": "/itis-frontend-app/static/js/main.6ba78bb2.js",
+    "static/media/accept.png": "/itis-frontend-app/static/media/accept.af2a744f043c0183e3bc.png",
     "static/media/pen.png": "/itis-frontend-app/static/media/pen.5efc12721931f1588763.png",
+    "static/media/discard.png": "/itis-frontend-app/static/media/discard.2fce6214b7c60c745aa6.png",
     "index.html": "/itis-frontend-app/index.html",
     "static/media/visibilityOff.svg": "/itis-frontend-app/static/media/visibilityOff.5dcac528f21a2fb46f8cda101966c209.svg",
     "static/media/visibility.svg": "/itis-frontend-app/static/media/visibility.ba0035312186b4b9844195cc76b0e5ed.svg",
-    "main.c2379e66.js.map": "/itis-frontend-app/static/js/main.c2379e66.js.map"
+    "main.6ba78bb2.js.map": "/itis-frontend-app/static/js/main.6ba78bb2.js.map"
   },
   "entrypoints": [
-    "static/js/main.c2379e66.js"
+    "static/js/main.6ba78bb2.js"
   ]
 }
