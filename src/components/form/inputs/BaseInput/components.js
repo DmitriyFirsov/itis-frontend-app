@@ -15,7 +15,7 @@ export const Container = styled.div(({ $isError, $disabled }) => {
 		align-items: center;
 
 		width: 100%;
-		min-height: 45px;
+		min-height: 30px;
 		background-color: white;
 
 		padding: 0.2em;

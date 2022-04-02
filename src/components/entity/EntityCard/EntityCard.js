@@ -1,29 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import TextField from 'components/form/formFields/TextField';
-import Button from 'components/form/inputs/Button';
 
-import { Wrapper, Header, Form, ButtonWrapper, StyledImage } from './components';
-import EditImg from './images/pen.png';
-import RemoveImg from './images/trash-bin.png';
+import { Wrapper, Header, Form, ButtonWrapper } from './components';
+import { ButtonInShowMode, ButtonInEditMode } from './buttons';
 
-export default function EntityCard({ title, name, id, description, onRemoveClick }) {
+export default function EntityCard({ title, name, id, description, onRemoveClick, onUpdateClick }) {
+	const INITIAL_FORM_STATE = { name, description };
+
+	const [isEditMode, setIsEditMode] = useState(false);
+	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
+
+	const handleEvent = (event, formFieldName) => {
+		const { value } = event.target;
+		const { type } = event;
+
+		setFormState((currentState) => ({
+			...currentState,
+			[formFieldName]: type === 'blur' ? value.trim() : value
+		}));
+	};
+
+	const handleUpdate = async (event) => {
+		event.preventDefault();
+
+		await onUpdateClick(id, formState.name, formState.description);
+	};
+
+	const acceptClick = (event) => {
+		setIsEditMode(false);
+		handleUpdate(event);
+	};
+
+	const discardClick = () => {
+		setIsEditMode(false);
+		setFormState(INITIAL_FORM_STATE);
+	};
+
+	const editClick = () => {
+		setIsEditMode(true);
+	};
+
+	const removeClick = () => {
+		onRemoveClick(id);
+	};
+
 	return (
 		<Wrapper>
 			<Header>
 				{title}
 				<ButtonWrapper>
-					<Button>
-						<StyledImage src={EditImg} alt="presentation" />
-					</Button>
-					<Button onClick={() => onRemoveClick(id)}>
-						<StyledImage src={RemoveImg} alt="presentation" />
-					</Button>
+					{isEditMode ? (
+						<ButtonInEditMode onAcceptClick={acceptClick} onDiscardClick={discardClick} isDisableAccept={formState.name.trim() === ''} />
+					) : (
+						<ButtonInShowMode editClick={editClick} removeClick={removeClick} />
+					)}
 				</ButtonWrapper>
 			</Header>
 			<Form>
-				<TextField label="Name" value={name} disabled />
-				<TextField label="Description" value={description} disabled />
+				<TextField
+					id={`name-for-${id}-${title.toLowerCase()}`}
+					label={isEditMode ? 'Name*' : 'Name'}
+					value={formState.name}
+					disabled={!isEditMode}
+					onChange={(event) => handleEvent(event, 'name')}
+					onBlur={(event) => handleEvent(event, 'name')}
+					required
+				/>
+				<TextField
+					id={`description-for-${id}-${title.toLowerCase()}`}
+					label="Description"
+					value={formState.description}
+					disabled={!isEditMode}
+					onChange={(event) => handleEvent(event, 'description')}
+					onBlur={(event) => handleEvent(event, 'description')}
+				/>
 			</Form>
 		</Wrapper>
 	);

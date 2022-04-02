@@ -4,17 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import useAuthUser from 'globals/AuthUser';
 import useCreateProject from 'hooks/mutations/useCreateProject';
 import useRemoveProject from 'hooks/mutations/useRemoveProject';
+import useUpdateProject from 'hooks/mutations/useUpdateProject';
 
 import DefaultLayout from 'components/Layouts/DefaultLayout/DefaultLayout';
 import EntityListWrapper from 'components/entity/EntityListWrapper/EntityListWrapper';
 import EntityCard from 'components/entity/EntityCard';
-import Button from 'components/form/inputs/Button';
+import CreateEntityBlock from 'components/entity/CreateEntityBlock';
 import { useApolloClient } from '@apollo/client';
-
-const INITIAL_FORM_STATE = {
-	name: 'New task 5',
-	description: 'desc'
-};
 
 export default function Index() {
 	const { user, isLoading } = useAuthUser();
@@ -26,16 +22,10 @@ export default function Index() {
 		await client.clearStore();
 		navigate('/login');
 	};
-	// const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 
 	const { create } = useCreateProject();
 	const { remove } = useRemoveProject();
-
-	const handleClick = async (event) => {
-		event.preventDefault();
-
-		await create(INITIAL_FORM_STATE.name, INITIAL_FORM_STATE.description);
-	};
+	const { update } = useUpdateProject();
 
 	useEffect(() => {
 		if (isLoading === false && !user) {
@@ -45,8 +35,7 @@ export default function Index() {
 
 	return (
 		<DefaultLayout title="Home page">
-			<Button onClick={handleLogoutClick}>Logout</Button>
-			<Button onClick={handleClick}>Create project</Button>
+			<CreateEntityBlock entity="project" handleLogoutClick={handleLogoutClick} createRequest={create} />
 			<EntityListWrapper>
 				{user?.projects?.map((project) => (
 					<EntityCard
@@ -56,6 +45,7 @@ export default function Index() {
 						name={project.name}
 						description={project.description}
 						onRemoveClick={remove}
+						onUpdateClick={update}
 					/>
 				))}
 			</EntityListWrapper>
