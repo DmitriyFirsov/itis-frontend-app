@@ -10,22 +10,16 @@
     "react": {
       "version": "detect"
     },
-    "jest": {
-      "version": 27
-    }
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:jest/recommended",
-    "plugin:jest/style"
   ],
   "env": {
     "node": true,
     "commonjs": true,
     "browser": true,
-    "es6": true,
-    "jest": true
+    "es6": true
   },
   "rules": {
     "react/prop-types": "off",
@@ -37,5 +31,35 @@
       }
     ],
     "prettier/prettier": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/**/*.test.js"
+      ],
+      "settings": {
+        "jest": {
+          "version": 27
+        }
+      },
+      "env": {
+        "jest": true
+      },
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest/style"
+      ]
+    },
+    {
+      "files": [
+        "cypress/**/*.spec.js"
+      ],
+      "env": {
+        "cypress/globals": true
+      },
+      "plugins": [
+        "cypress"
+      ]
+    }
+  ]
 }
