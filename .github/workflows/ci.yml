@@ -45,4 +45,4 @@ jobs:
         env:
           REACT_APP_API_URL: https://itis-task-tracker-be.herokuapp.com
       - name: Start server and e2e tests
-        run: node scripts/server.js & sleep 10 & cypress run
+        run: node scripts/server.js & sleep 10 & yarn cypress run
