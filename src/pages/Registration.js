@@ -19,6 +19,7 @@ import useHandleChangeField from 'components/form/utils/useHandleChangeField';
 import TextField from 'components/form/formFields/TextField';
 import PasswordField from 'components/form/formFields/PasswordField';
 import Button from 'components/form/inputs/Button';
+import FormError from '../components/form/FormError';
 
 const INITIAL_FORM_STATE = {
 	email: '',
@@ -38,7 +39,7 @@ const VALIDATION_CONFIG = {
 
 export default function Registration() {
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
-	const [errorsState, isHasError] = useSharedValidation(formState, VALIDATION_CONFIG);
+	const [errorsState, isHasClientError] = useSharedValidation(formState, VALIDATION_CONFIG);
 
 	const isRequiredFieldFilled = useRequiredFieldsFilled(formState, Object.keys(INITIAL_FORM_STATE));
 
@@ -53,15 +54,25 @@ export default function Registration() {
 	}, [isLoading, user]);
 
 	const client = useApolloClient();
+	const [isSignUpLogin, setIsSignUpLoading] = useState(false);
+	const [signUpError, setSignUpError] = useState();
 	const handleRegister = async (event) => {
 		event.preventDefault();
-		if (!isHasError && isRequiredFieldFilled) {
-			await signUp(client, formState);
+		if (!isHasClientError && isRequiredFieldFilled) {
+			setIsSignUpLoading(false);
+			try {
+				await signUp(client, formState);
+			} catch (error) {
+				setSignUpError(error);
+			} finally {
+				setIsSignUpLoading(true);
+			}
 		}
 	};
 
 	return (
 		<OneFormLayout>
+			{signUpError && <FormError>{signUpError.message}</FormError>}
 			<TextField
 				label={'email'}
 				id={'email'}
@@ -94,7 +105,7 @@ export default function Registration() {
 				value={formState.password}
 				error={errorsState.password}
 			/>
-			<Button type="submit" disabled={isHasError || !isRequiredFieldFilled || isLoading} onClick={handleRegister}>
+			<Button type="submit" disabled={isSignUpLogin || isHasClientError || !isRequiredFieldFilled || isLoading} onClick={handleRegister}>
 				Register
 			</Button>
 		</OneFormLayout>

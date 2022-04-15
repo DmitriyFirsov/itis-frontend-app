@@ -17,6 +17,7 @@ import getFirstError from 'validators/helpers/getFirstError';
 import emptyValidator from 'validators/stringValidators/emptyValidator';
 import minLengthValidatorBuilder from 'validators/stringValidators/minLengthValidatorBuilder';
 import useRequiredFieldsFilled from 'validators/useRequiredFieldsFilled';
+import FormError from '../components/form/FormError';
 
 const INITIAL_FORM_STATE = { login: '', password: '' };
 const VALIDATION_CONFIG = {
@@ -24,9 +25,9 @@ const VALIDATION_CONFIG = {
 	password: (value) => getFirstError([emptyValidator, minLengthValidatorBuilder(8)], value)
 };
 
-export default function Index() {
+export default function Login() {
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
-	const [errorsState, isHasError] = useSharedValidation(formState, VALIDATION_CONFIG);
+	const [errorsState, isHasClientErrors] = useSharedValidation(formState, VALIDATION_CONFIG);
 
 	const isRequiredFieldFilled = useRequiredFieldsFilled(formState, Object.keys(INITIAL_FORM_STATE));
 
@@ -34,10 +35,20 @@ export default function Index() {
 
 	const { user, isLoading } = useAuthUser();
 	const client = useApolloClient();
+
+	const [isSignInLoading, setIsSignInLoading] = useState(false);
+	const [signInError, setSignInError] = useState();
 	const handleSignIn = async (event) => {
 		event.preventDefault();
-		if (!isHasError && isRequiredFieldFilled) {
-			await signIn(client, formState);
+		if (!isHasClientErrors && isRequiredFieldFilled) {
+			setIsSignInLoading(true);
+			try {
+				await signIn(client, formState);
+			} catch (error) {
+				setSignInError(error);
+			} finally {
+				setIsSignInLoading(false);
+			}
 		}
 	};
 
@@ -50,6 +61,7 @@ export default function Index() {
 
 	return (
 		<OneFormLayout>
+			{signInError && <FormError>{signInError.message}</FormError>}
 			<TextField id="login" label="email" value={formState.login} error={errorsState.login} onChange={handleEvents} onBlur={handleEvents} />
 			<PasswordField
 				id="password"
@@ -59,7 +71,7 @@ export default function Index() {
 				onChange={handleEvents}
 				onBlur={handleEvents}
 			/>
-			<Button type="submit" disabled={isHasError || !isRequiredFieldFilled || isLoading} onClick={handleSignIn}>
+			<Button type="submit" disabled={isHasClientErrors || isSignInLoading || !isRequiredFieldFilled || isLoading} onClick={handleSignIn}>
 				Log in
 			</Button>
 		</OneFormLayout>
