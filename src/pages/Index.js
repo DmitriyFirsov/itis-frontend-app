@@ -23,7 +23,7 @@ export default function Index() {
 		navigate('/login');
 	};
 
-	const { create } = useCreateProject();
+	const { create, loading, error } = useCreateProject();
 	const { remove } = useRemoveProject();
 	const { update } = useUpdateProject();
 
@@ -35,15 +35,15 @@ export default function Index() {
 
 	return (
 		<DefaultLayout title="Home page">
-			<CreateEntityBlock entity="project" handleLogoutClick={handleLogoutClick} createRequest={create} />
+			<CreateEntityBlock entity="project" handleLogoutClick={handleLogoutClick} createRequest={create} isLoading={loading} error={error} />
 			<EntityListWrapper>
-				{user?.projects?.map((project) => (
+				{user?.projects?.map(({ id, name, description }) => (
 					<EntityCard
-						key={project.id}
-						id={project.id}
+						key={id}
+						id={id}
 						title="Project"
-						name={project.name}
-						description={project.description}
+						name={name}
+						description={description}
 						onRemoveClick={remove}
 						onUpdateClick={update}
 					/>

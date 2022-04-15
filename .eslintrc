@@ -9,11 +9,14 @@
   "settings": {
     "react": {
       "version": "detect"
-    },
+    }
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
+    "plugin:react/recommended"
+  ],
+  "ignorePatterns": [
+    "node_modules"
   ],
   "env": {
     "node": true,
@@ -30,7 +33,8 @@
         "ignoreRestSiblings": true
       }
     ],
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "prefer-destructuring": "error"
   },
   "overrides": [
     {
