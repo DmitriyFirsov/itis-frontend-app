@@ -25,3 +25,24 @@ jobs:
       run: yarn eslint . --ext .js
     - name: Tests
       run: yarn jest
+
+  e2e:
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          cache: 'yarn'
+      - name: Install dependensies
+        run: yarn --frozen-lockfile
+      - name: Build
+        run: yarn build
+        env:
+          REACT_APP_API_URL: https://itis-task-tracker-be.herokuapp.com
+      - name: Start server and e2e tests
+        run: node scripts/server.js & sleep 10 & yarn cypress run
