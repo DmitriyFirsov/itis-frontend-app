@@ -1,11 +1,16 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import groupBy from 'lodash/groupBy';
-
-import DefaultLayout from 'components/Layouts/DefaultLayout/DefaultLayout';
 import { useMutation } from '@apollo/client';
-import { GET_PROJECT } from '../../../api/query/getProject';
-import { CREATE_TASK } from '../../../api/mutations/createTask';
+import groupBy from 'lodash/groupBy';
+import startCase from 'lodash/startCase';
+import lowerCase from 'lodash/lowerCase';
+import upperFirst from 'lodash/upperFirst';
+
+import FormError from 'components/form/FormError';
+import DefaultLayout from 'components/Layouts/DefaultLayout/DefaultLayout';
+
+import { GET_PROJECT } from 'api/query/getProject';
+import { CREATE_TASK } from 'api/mutations/createTask';
 import {
 	ProjectDescriptionContainer,
 	TaskContainer,
@@ -15,7 +20,7 @@ import {
 	TasksContainer
 } from './components';
 import useCurrentProject from './useCurrentProject';
-import FormError from '../../../components/form/FormError';
+
 
 export default function ProjectPage() {
 	const { id } = useParams();
@@ -44,7 +49,7 @@ export default function ProjectPage() {
 					{Object.entries(groupBy(data.tasks, ({ status }) => status)).map(([status, tasks]) => {
 						return (
 							<TaskGroupContainer key={status}>
-								<TaskGroupTitle>{status}</TaskGroupTitle>
+								<TaskGroupTitle>{upperFirst(lowerCase(startCase(status)))}</TaskGroupTitle>
 								<TaskListContainer>
 									{tasks.map(({ id, title, description }) => {
 										return (
