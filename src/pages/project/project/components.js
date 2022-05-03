@@ -33,7 +33,7 @@ export const TaskContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	gap: 0.5em;
-  padding: 0.4em;
-  border-radius: 8px;
-  border: 1px solid darkgray;
+	padding: 0.4em;
+	border-radius: 8px;
+	border: 1px solid darkgray;
 `;
