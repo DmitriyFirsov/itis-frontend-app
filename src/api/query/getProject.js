@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 export const GET_PROJECT = gql`
 	query getProject($id: ID!) {
 		me {
+			id
 			projects(id: $id) {
 				id
 				name
@@ -12,10 +13,6 @@ export const GET_PROJECT = gql`
 					status
 					title
 					description
-					comments {
-						id
-						text
-					}
 				}
 			}
 		}
