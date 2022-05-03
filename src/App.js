@@ -7,7 +7,7 @@ import { AuthUser } from 'globals/AuthUser';
 import LoginPage from 'pages/Login';
 import HomePage from 'pages/project/Index';
 import RegistrationPage from 'pages/Registration';
-import ProjectPage from 'pages/project/project';
+import ProjectPage from 'pages/project/project/project';
 
 function App() {
 	return (

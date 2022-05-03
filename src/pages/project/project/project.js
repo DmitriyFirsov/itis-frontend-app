@@ -3,23 +3,19 @@ import { useParams } from 'react-router-dom';
 import groupBy from 'lodash/groupBy';
 
 import DefaultLayout from 'components/Layouts/DefaultLayout/DefaultLayout';
-import { useMutation, useQuery } from '@apollo/client';
-import { GET_PROJECT } from '../../api/query/getProject';
-import { CREATE_TASK } from '../../api/mutations/createTask';
-
-const useCurrentProject = (id) => {
-	const { data, loading, error } = useQuery(GET_PROJECT, {
-		variables: {
-			id
-		}
-	});
-
-	return {
-		data: data?.me?.projects[0],
-		isLoading: loading,
-		error
-	};
-};
+import { useMutation } from '@apollo/client';
+import { GET_PROJECT } from '../../../api/query/getProject';
+import { CREATE_TASK } from '../../../api/mutations/createTask';
+import {
+	ProjectDescriptionContainer,
+	TaskContainer,
+	TaskGroupContainer,
+	TaskGroupTitle,
+	TaskListContainer,
+	TasksContainer
+} from './components';
+import useCurrentProject from './useCurrentProject';
+import FormError from '../../../components/form/FormError';
 
 export default function ProjectPage() {
 	const { id } = useParams();
@@ -29,7 +25,6 @@ export default function ProjectPage() {
 	});
 
 	const handleClick = async () => {
-		console.log(id);
 		await mutation({
 			variables: {
 				projectId: +id,
@@ -42,30 +37,30 @@ export default function ProjectPage() {
 
 	return (
 		<DefaultLayout title={isLoading ? '' : `Project: ${data?.name}`}>
-			{error && <div>{error.message}</div>}
-			{data?.description && <div>{data.description}</div>}
+			{data?.description && <ProjectDescriptionContainer>{data.description}</ProjectDescriptionContainer>}
+			{error && <FormError>{error.message}</FormError>}
 			{data?.tasks && (
-				<div>
+				<TasksContainer>
 					{Object.entries(groupBy(data.tasks, ({ status }) => status)).map(([status, tasks]) => {
 						return (
-							<div key={status}>
-								<div>{status}</div>
-								<div>
+							<TaskGroupContainer key={status}>
+								<TaskGroupTitle>{status}</TaskGroupTitle>
+								<TaskListContainer>
 									{tasks.map(({ id, title, description }) => {
 										return (
-											<div key={id}>
+											<TaskContainer key={id}>
 												<div>
 													{id} {title}
 												</div>
 												<div>{description}</div>
-											</div>
+											</TaskContainer>
 										);
 									})}
-								</div>
-							</div>
+								</TaskListContainer>
+							</TaskGroupContainer>
 						);
 					})}
-				</div>
+				</TasksContainer>
 			)}
 			<button onClick={handleClick}>test button</button>
 		</DefaultLayout>
