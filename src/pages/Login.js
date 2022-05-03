@@ -18,6 +18,7 @@ import emptyValidator from 'validators/stringValidators/emptyValidator';
 import minLengthValidatorBuilder from 'validators/stringValidators/minLengthValidatorBuilder';
 import useRequiredFieldsFilled from 'validators/useRequiredFieldsFilled';
 import FormError from '../components/form/FormError';
+import withAuth from "../hoc/withAuth";
 
 const INITIAL_FORM_STATE = { login: '', password: '' };
 const VALIDATION_CONFIG = {
@@ -25,7 +26,7 @@ const VALIDATION_CONFIG = {
 	password: (value) => getFirstError([emptyValidator, minLengthValidatorBuilder(8)], value)
 };
 
-export default function Login() {
+function Login() {
 	const [formState, setFormState] = useState(INITIAL_FORM_STATE);
 	const [errorsState, isHasClientErrors] = useSharedValidation(formState, VALIDATION_CONFIG);
 
@@ -51,13 +52,13 @@ export default function Login() {
 			}
 		}
 	};
-
-	const navigate = useNavigate();
-	useEffect(() => {
-		if (isLoading === false && user) {
-			navigate('/', { replace: true });
-		}
-	}, [isLoading, user]);
+	//
+	// const navigate = useNavigate();
+	// useEffect(() => {
+	// 	if (isLoading === false && user) {
+	// 		navigate('/', { replace: true });
+	// 	}
+	// }, [isLoading, user]);
 
 	return (
 		<OneFormLayout>
@@ -77,3 +78,5 @@ export default function Login() {
 		</OneFormLayout>
 	);
 }
+
+export default withAuth(Login);
