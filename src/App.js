@@ -5,8 +5,9 @@ import EnvSpecificRouter from 'components/EnvSpecificRouter';
 import { AuthUser } from 'globals/AuthUser';
 
 import LoginPage from 'pages/Login';
-import HomePage from 'pages/Index';
+import HomePage from 'pages/project/Index';
 import RegistrationPage from 'pages/Registration';
+import ProjectPage from 'pages/project/project';
 
 function App() {
 	return (
@@ -14,6 +15,7 @@ function App() {
 			<EnvSpecificRouter>
 				<Routes>
 					<Route path={'/'} element={<HomePage />} />
+					<Route path={'/:id'} element={<ProjectPage />} />
 					<Route path={'/login'} element={<LoginPage />} />
 					<Route path={'/registration'} element={<RegistrationPage />} />
 				</Routes>

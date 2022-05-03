@@ -41,7 +41,7 @@ export default function Index() {
 					<EntityCard
 						key={id}
 						id={id}
-						title="Project"
+						title={`Project ${id}`}
 						name={name}
 						description={description}
 						onRemoveClick={remove}
